@@ -8,9 +8,18 @@ fs.mkdir(path.join(__dirname, 'project-dist'),{ recursive: true }, (err)=>{
     if (err) return console.log(err);
 });
 
+fs.mkdir(path.join(__dirname, '/project-dist', 'assets'),{ recursive: true }, (err)=>{
+  if (err) return console.log(err);
+});
+
 fs.open(path.join(__dirname , '/project-dist/style.css'), 'w', (err) => {
     if(err) throw err;
   });
+
+  fs.open(path.join(__dirname , '/project-dist/index.html'), 'w', (err) => {
+    if(err) throw err;
+  }); 
+  
   fs.readdir(pathToFolder,{ withFileTypes: true }, (err, files)=>{
       if (err)
       console.log(err);
@@ -40,7 +49,7 @@ fs.readdir(pathToAssets,{ withFileTypes: true }, (err, files)=>{
       
     files.forEach(file => {   
       if (file.isDirectory()){
-              fs.mkdir(path.join(__dirname, '/project-dist', file.name),{ recursive: true }, (err)=>{
+              fs.mkdir(path.join(__dirname, '/project-dist', '/assets', file.name),{ recursive: true }, (err)=>{
                 if (err) return console.log(err);
             });
             const pathToAssetsFolder = path.join(pathToAssets, file.name);
@@ -57,7 +66,7 @@ fs.readdir(pathToAssets,{ withFileTypes: true }, (err, files)=>{
                       if (error) {
                         console.log(error);
                       } else {
-                          fs.copyFile(path.join(pathToAssetsFolder, file.name), path.join(pathToNewFolder, folderName, file.name), (err)=>{
+                          fs.copyFile(path.join(pathToAssetsFolder, file.name), path.join(pathToNewFolder, '/assets', folderName, file.name), (err)=>{
                             if (err)
                             console.log(err);
                           })           
@@ -71,5 +80,4 @@ fs.readdir(pathToAssets,{ withFileTypes: true }, (err, files)=>{
     });
     };
 });
-
 
